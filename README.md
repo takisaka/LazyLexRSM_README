@@ -1,3 +1,6 @@
+The following is a copy of the README file contained in https://www.doi.org/10.5281/zenodo.10937557
+
+
 # **Contents**
 This is an artifact used for experiments in the CAV 2024 paper “Lexicographic Ranking Supermartingales with Lazy Lower Bounds”.
 
