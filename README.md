@@ -2,7 +2,7 @@ The following is a copy of the README file contained in https://www.doi.org/10.5
 
 
 # **Contents**
-This is an artifact used for experiments in the CAV 2024 paper “Lexicographic Ranking Supermartingales with Lazy Lower Bounds”.
+This is an artifact used for experiments in the CAV 2024 paper “Lexicographic Ranking Supermartingales with Lazy Lower Bounds” (submission number 2221).
 
 **[Artifact summary]** This artifact runs automated synthesis algorithms of lexicographic ranking supermartingale that verify almost-sure termination of probabilistic programs. The artifact contains 4 variants of the algorithm, namely two instances of the algorithm proposed in the paper (**SMC** and **EMC**), and two baselines (**STR** and **LWN**).
 
@@ -11,6 +11,8 @@ This is an artifact used for experiments in the CAV 2024 paper “Lexicographic 
 - the function `generate_equations()`, which declares LP constraints
 
 **[Relation to the paper]** In Section 7 of the paper, we performed experiments by running 4 algorithms above for a benchmark, whose results are given in Table 1 (p17) and Table 2 (p36-39). We also reported in p17 the numbers of benchmark programs for which each algorithm successfully verified almost-sure termination of programs (**STR** = 98; **LWN** = 105; **SMC** = 119; **EMC** = 119). The artifact contains necessary materials to reproduce these results.
+
+**[List of badges that are claimed]** We claim the “reusable” badge (if declined, we claim the “available” and “functional” badges). 
 
 
 # **Artifact Requirements**
@@ -28,9 +30,9 @@ Below we provide environments we tested, together with the running time of the m
 
 
 # **Strture and Content**
-An explanation on files in this repository is as follows.
+Files necessary for the experment is given in the directory `$/Desktop/implementation` of the VM. 
+An explanation on relevant files in the directory is as follows.
 
-- `README.md`    ... this file
 - `examples`    ... the benchmarks of the experiment
   - `ForExperiments`    ... benchmarks with "p.l. = False, p.a. = False" in Table 2 of the paper
   - `probloops`    ... benchmarks with "p.l = True, p.a. = False" in Table 2 of the paper
@@ -43,21 +45,25 @@ An explanation on files in this repository is as follows.
 - `runAllExp.sh` ... script to run the experiment, and generate the result tables
 - `compile.sh` ... script to compile the codes
 
+The computation result by the authors is also given in the directory `$/Desktop/Expected results`.
+
 # How to replicate the experiment result
-
-The following procedure has been tested over a virtual machine with Ubuntu 22.04.3.
-
 ## Installation
 
-- Clone this repository to your environment.
-- Install CPLEX (https://www.ibm.com/products/ilog-cplex-optimization-studio/cplex-optimizer).
+- The artifact is packaged as a virtual machine image. Activate it by your host software. We checked the virtual machine correctly works with VirtualBox 7.0.10 on Windows 11:
+https://www.virtualbox.org/
+  - **The default CPU/memory allocations to the VM are 2 cores/4GB, respectively. To finish the experiment faster, it is recommended to allocate sufficient number of CPU cores to the VM.** In the test run, we allocated the maximum number of cores to the VM (See *Resource requirement* above).
+
+- The OS of the VM is Ubuntu 22.04.3. Activate the VM, and login with the password `123456`.
+
+- Install CPLEX (https://www.ibm.com/products/ilog-cplex-optimization-studio/cplex-optimizer) to the VM.
   - Academic licence is available for free (registration necessary; cf. https://community.ibm.com/community/user/ai-datascience/blogs/xavier-nodet1/2020/07/09/cplex-free-for-students)
   - There is also the Community Edition for free, with the 1,000 cap on the number of variables/constraints (cf. https://www.ibm.com/products/ilog-cplex-optimization-studio/pricing). For complete replication of the experiment result, the full version is necessary; but Community Edition also does most part of it. See the section *How to confirm the replication*.
   - Download the installer, and run it to install the software. 
   - CPLEX is called via the script `$/Desktop/implementation/files/script.sh`. Update the path info in Line 3 if necessary.
   - We checked the artifact correctly reproduces the experiment results with CPLEX 12.7.1. We also checked with the Community Edition 22.1.1; with this version, we were able to reproduce the same success counts as the unrestricted version, while we observed the algorithm aborts in a few instances whose results are "False" with the unrestricted version.  
 
-- Install ASPIC (http://laure.gonnord.org/pro/aspic/aspic.html).
+- Install ASPIC (http://laure.gonnord.org/pro/aspic/aspic.html) to the VM.
   - Download the binary at http://laure.gonnord.org/pro/aspic/aspicV3.4
   - Put the binary at `$/Desktop/implementation/files`
   - We checked the artifact works correctly with ASPIC v3.4.
@@ -161,6 +167,12 @@ The problem is too large for CPLEX community edition!
   - `equations.lp[dim]` ... the successfully solved LP problem in the [dim]-th iteration of the algorithm (if exists). Note that **SMC** and **EMC** may try multiple LP problems in a single iteration. When no LP problems were successfully solved in a given iteration (in with case the algorithm reports failure and terminates), the file is the last LP problems tried.
   - `EquationsOutput[dim]` ... the value of the LexRSM in the [dim]-th dimension
   - `InvariantOutput` ... the invariant generated by ASPIC
+
+## Correctness test of the artifact
+ There were 21 new input programs that are verified to be almost-sure terminating by our implementation, while the existing one (**STR**) couldn't verify it. We checked by hand that these 21 programs are actually almost-sure terminating, as they are relatively small.
+
+ ## Availability of the artifact in different environments
+ The code of the artifact is also available at https://github.com/A71uuY/LazyLexRSM
 
 
 # References
